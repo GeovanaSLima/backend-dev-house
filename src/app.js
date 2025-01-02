@@ -1,7 +1,8 @@
-import express from 'express';
 import routes from './routes';
-import { MongoClient } from 'mongodb';
+
+import express from 'express';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
@@ -10,9 +11,7 @@ class App {
   constructor() {
     this.server = express();
 
-    const client = new MongoClient(process.env.MONGO_URI);
-
-    client.connect();
+    mongoose.connect(process.env.MONGO_URI);
 
     this.middlewares();
     this.routes();
