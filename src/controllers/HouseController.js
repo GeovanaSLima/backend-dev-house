@@ -1,7 +1,5 @@
 import House from "../models/House";
-import User from "../models/User";
 import { isOwner, isValidSchema } from "../config/utils";
-import * as Yup from 'yup';
 
 class HouseController {
 
@@ -33,8 +31,7 @@ class HouseController {
       });
   
       return res.json(house);
-    } catch (error) {
-      console.error(error);
+    } catch {
       return res.status(500).json({ error: "Erro interno do servidor." });
     }
   }
@@ -70,8 +67,7 @@ class HouseController {
       );
   
       return res.status(200).json({ message: "Casa atualizada com sucesso." });
-    } catch (error) {
-      console.error(error);
+    } catch {
       return res.status(500).json({ error: "Erro interno do servidor." });
     }
   }
@@ -90,8 +86,7 @@ class HouseController {
       await House.findByIdAndDelete({ _id: house_id });
 
       return res.status(200).json({ message: "Casa excluída com sucesso."});
-    } catch (error) {
-      console.error(error);
+    } catch {
       return res.status(500).json({ error: "Erro interno do servidor." });
     }
   }
