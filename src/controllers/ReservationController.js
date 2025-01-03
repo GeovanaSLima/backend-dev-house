@@ -43,6 +43,14 @@ class ReservationController {
 
     return res.json(populatedReservation);
   }
+
+  async destroy(req, res) {
+    const { reservation_id } = req.body;
+
+    await Reservation.findByIdAndDelete({ _id: reservation_id });
+
+    return res.send();
+  }
 }
 
 export default new ReservationController();
