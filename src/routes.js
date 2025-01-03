@@ -20,5 +20,6 @@ routes.put("/houses/:house_id", upload.single('thumbnail'), HouseController.upda
 routes.get("/dashboard", DashboardController.show);
 
 routes.post("/houses/:house_id/reserve", ReservationController.store);
+routes.get("/reservations", ReservationController.index);
 
 export default routes;
