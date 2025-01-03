@@ -1,6 +1,7 @@
 import House from "../models/House";
 import User from "../models/User";
-import { isOwner } from "../config/utils";
+import { isOwner, isValidSchema } from "../config/utils";
+import * as Yup from 'yup';
 
 class HouseController {
 
@@ -13,29 +14,43 @@ class HouseController {
   }
 
   async store(req, res) {
-    const { filename } = req.file;
-    const { description, price, location, available } = req.body;
-    const { user_id } = req.headers;
-
-    const house = await House.create({
-      user: user_id,
-      thumbnail: filename,
-      description,
-      price,
-      location,
-      available
-    })
-
-    return res.json(house);
+    try {
+      if(!(await isValidSchema(req.body))) {
+        return res.status(400).json({ error: "Falha na validação."})
+      }
+  
+      const { filename } = req.file;
+      const { user_id } = req.headers;
+      const { description, price, location, available } = req.body;
+  
+      const house = await House.create({
+        user: user_id,
+        thumbnail: filename,
+        description,
+        price,
+        location,
+        available,
+      });
+  
+      return res.json(house);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Erro interno do servidor." });
+    }
   }
+  
 
   async update(req, res) {
     try {
+      if(!(await isValidSchema(req.body))) {
+        return res.status(400).json({ error: "Falha na validação."})
+      }
+
       const { filename } = req.file;
       const { house_id } = req.params;
       const { user_id } = req.headers;
       const { description, price, location, available } = req.body;
-  
+
       const owner = await isOwner(user_id, house_id);
   
       if (!owner) {
