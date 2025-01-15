@@ -1,1 +1,3 @@
-# dev_house_backend
+# Dev House API
+
+Rest API developed using NodeJS
