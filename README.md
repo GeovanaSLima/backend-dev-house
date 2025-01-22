@@ -1,4 +1,4 @@
 # Dev House API
 
-Rest API developed using NodeJS
+Rest API developed using NodeJS for house rent postings
 
